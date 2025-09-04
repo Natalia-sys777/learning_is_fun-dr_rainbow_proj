@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Подорож звуком — Dr Rainbow{% endblock %}
+
+{% block content %}
+<section class="panel" style="padding:2rem;display:grid;gap:2rem;max-width:900px;margin:auto">
+
+  <!-- Асистент Марко у стилі коміксу -->
+  <div style="display:flex;gap:1.5rem;align-items:center">
+    <img src="{% static 'images/assistant_boy.png' %}" alt="Марко в стилі коміксу" style="height:160px;border-radius:16px;border:4px solid #a5f3fc;background:#ecfeff">
+    <div style="background:#fffbea;border-left:6px solid #fde68a;padding:1rem 1.25rem;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.08)">
+      <p style="margin:0; font-size:1.2rem; line-height:1.5">
+        <strong>Привіт, я Марко! 🎧</strong><br>
+        Сьогодні ми дізнаємось, що таке звук і як його розпізнавати! Приготуй вушка — буде цікаво!
+      </p>
+    </div>
+  </div>
+
+  <!-- Вступна частина -->
+  <article class="panel" style="background:#f0fdf4;padding:1rem;border-radius:12px">
+    <h2 style="margin-top:0">🔍 Що таке звук?</h2>
+    <p>Звук — це вібрації, які ми чуємо. Коли щось тремтить, воно створює хвилі в повітрі, а наші вуха їх сприймають.</p>
+  </article>
+
+  <!-- Інтерактивна вправа -->
+  <section class="panel" style="background:#f9fafb;padding:1.5rem;border-radius:16px">
+    <h2 style="margin-top:0">🎯 Вгадай джерело звуку</h2>
+    <p class="muted">'Натисни на кнопку, прослухай звук і обери правильну картинку.'</p>
+
+    <div style="display:flex;flex-direction:column;gap:1rem;margin-top:1rem">
+      <button onclick="playSound(0)" class="btn">🔊 Програти звук 1</button>
+      <button onclick="playSound(1)" class="btn">🔊 Програти звук 2</button>
+      <button onclick="playSound(2)" class="btn">🔊 Програти звук 3</button>
+
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem">
+        <button onclick="checkAnswer(0, 'door')" class="app-btn">🚪 Двері</button>
+        <button onclick="checkAnswer(1, 'dog')" class="app-btn">🐶 Собака</button>
+        <button onclick="checkAnswer(2, 'drum')" class="app-btn">🥁 Барабан</button>
+      </div>
+
+      <p id="result" class="muted" style="margin-top:1rem;font-weight:bold;"></p>
+    </div>
+  </section>
+
+  <script>
+    const sounds = [
+      new Audio("{% static 'audio/door_creak.mp3' %}"),
+      new Audio("{% static 'audio/dog_bark.mp3' %}"),
+      new Audio("{% static 'audio/drum_hit.mp3' %}")
+    ];
+
+    const answers = ['door', 'dog', 'drum'];
+    let currentIndex = null;
+
+    function playSound(index) {
+      currentIndex = index;
+      sounds[index].play();
+      document.getElementById('result').textContent = "🎧 Слухаємо...";
+    }
+
+    function checkAnswer(index, choice) {
+      if (currentIndex === null) {
+        document.getElementById('result').textContent = "Спочатку прослухай звук!";
+        return;
+      }
+      const correct = answers[currentIndex];
+      if (choice === correct) {
+        document.getElementById('result').textContent = "✅ Молодець! Це правильно!";
+      } else {
+        document.getElementById('result').textContent = "❌ Хмм... Це не той звук. Спробуй ще!";
+      }
+    }
+  </script>
+
+</section>
+{% endblock %}
+

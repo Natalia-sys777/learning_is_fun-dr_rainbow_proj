@@ -1,0 +1,367 @@
+{% load static %}
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}Dr Rainbow — навчання це весело!{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {% block extra_head %}{% endblock %}
+  <link rel="icon" href="{% static 'images/favicon.ico' %}" />
+  <style>
+    :root {
+      --bg: #fcf8ff;
+      --panel: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --ring: #e5e7eb;
+      --brand1: #f97316;
+      --brand2: #22c55e;
+      --brand3: #3b82f6;
+      --brand4: #a855f7;
+      --grad: linear-gradient(135deg, var(--brand3), var(--brand4) 45%, var(--brand1) 80%, var(--brand2));
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: "Nunito", system-ui, sans-serif;
+      color: var(--text);
+    }
+
+    body {
+      background:
+        radial-gradient(60rem 60rem at -20% -10%, #e0e7ff 0%, transparent 60%),
+        radial-gradient(60rem 60rem at 120% 10%, #ffe4e6 0%, transparent 60%),
+        var(--bg);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrap {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    /* ===== HEADER ===== */
+    header.site {
+      position: relative;
+      background: var(--grad);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .site-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .titlebox h1 {
+      font-size: 1.3rem;
+      margin: 0;
+    }
+
+    .titlebox p {
+      font-size: 0.9rem;
+      margin: 0.2rem 0 0;
+    }
+
+    nav.main {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .nav-btn {
+      background: rgba(255,255,255,0.95);
+      color: #111827;
+      border: 2px solid transparent;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.06s ease, box-shadow 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.16);
+    }
+
+    .nav-btn--ghost {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    .hero {
+      display: none;
+    }
+
+    @media (min-width: 900px) {
+      .hero {
+        display: block;
+      }
+      .hero img {
+        height: 140px;
+        max-width: 100%;
+        object-fit: contain;
+        display: block;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      }
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--ring);
+      border-radius: 18px;
+      padding: 1rem;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+    .lesson-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  margin-top: 1.5rem;
+}
+
+.lesson-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  border: 1px solid var(--ring);
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  overflow: hidden;
+  transition: transform .1s ease;
+}
+
+.lesson-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+.lesson-image img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--ring);
+}
+
+.lesson-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lesson-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.badge {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--ring);
+  background: #f8fafc;
+  color: var(--text);
+}
+
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .btn, .app-btn {
+      display: inline-block;
+      padding: 0.6rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .btn {
+      background: #111827;
+      color: #fff;
+      border: 1px solid #111827;
+    }
+
+    .app-btn {
+      background: #fff;
+      color: #111827;
+      border: 1px solid var(--ring);
+    }
+
+    /* ===== FOOTER ===== */
+    footer.site {
+      margin-top: 1rem;
+      color: #e2e8f0;
+      background: #0f172a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer.site::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.15;
+      background: url("{% static 'images/footer_pattern.png' %}") center/cover no-repeat;
+      pointer-events: none;
+    }
+
+    .footer-inner {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-nav a {
+      color: #e2e8f0;
+      opacity: 0.9;
+    }
+
+    .footer-nav a:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .tiny {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .skip {
+      position: absolute;
+      left: -10000px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .skip:focus {
+      left: 1rem;
+      top: 1rem;
+      width: auto;
+      height: auto;
+      background: #fff;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      z-index: 50;
+    }
+  </style>
+</head>
+<body>
+<a href="#main" class="skip">Перейти до основного контенту</a>
+<div class="wrap">
+
+  <!-- ===== HEADER ===== -->
+  <header class="site" role="banner" aria-label="Заголовок сайту">
+    <div class="site-inner">
+      <div>
+        <div class="brand">
+          <div class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="Логотип Dr Rainbow" />
+          </div>
+          <div class="titlebox">
+            <h1>Dr Rainbow 🌈</h1>
+            <p class="tiny">Навчання — це пригода!</p>
+          </div>
+        </div>
+
+        <nav class="main" aria-label="Основна навігація">
+          <a class="nav-btn" href="{% url 'home' %}">🏠 Головна</a>
+          <a class="nav-btn" href="{% url 'lessons' %}">📚 Уроки</a>
+          <a class="nav-btn" href="{% url 'experiments:experiments' %}">🔬 Експерименти</a>
+          <a class="nav-btn nav-btn--ghost" href="/tasks/">🧩 Завдання</a>
+          <a class="nav-btn nav-btn--ghost" href="/admin/">🛠️ Адмінка</a>
+        </nav>
+      </div>
+
+      <aside class="hero" aria-hidden="true">
+        <img src="{% static 'images/header_illustration.png' %}" alt="Герой" />
+      </aside>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main id="main" role="main">
+    {% block content %}
+    <section class="panel">
+      <h2>Готово до пригод!</h2>
+      <p class="muted">Тут з’явиться контент сторінки.</p>
+    </section>
+    {% endblock %}
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site" role="contentinfo">
+    <div class="footer-inner">
+      <nav class="footer-nav" aria-label="Нижня навігація">
+        <a href="{% url 'home' %}">Головна</a>
+        <a href="{% url 'lessons' %}">Уроки</a>
+        <a href="{% url 'experiments:experiments' %}">Експерименти</a>
+        <a href="/tasks/">Завдання</a>
+      </nav>
+      <p class="tiny">© {% now "Y" %} NatAn. Навчання з посмішкою 😊</p>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

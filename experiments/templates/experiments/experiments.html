@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Експерименти — Dr Rainbow{% endblock %}
+
+{% block content %}
+<section class="panel" style="padding:1.25rem;display:grid;gap:1rem">
+  <header style="text-align:center">
+    <h1 style="margin:0">🔬 Експерименти</h1>
+    <p class="muted" style="margin:.25rem 0 0">Оберіть дослід — і вперед у наукову пригоду!</p>
+    <div style="display:flex;gap:1rem;justify-content:center;margin-top:1rem">
+      <img src="{% static 'images/assistant_girl.png' %}" alt="Помічниця" style="height:72px;border-radius:12px;object-fit:cover">
+      <img src="{% static 'images/assistant_boy.png' %}" alt="Помічник" style="height:72px;border-radius:12px;object-fit:cover">
+    </div>
+  </header>
+
+  <div style="display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:.5rem">
+    {% for e in experiments %}
+      <article class="panel" style="padding:1rem;display:grid;gap:.6rem">
+        <img src="{% static e.image %}" alt="" style="width:100%;max-height:160px;object-fit:cover;border-radius:12px">
+        <h3 style="margin:0">{{ e.emoji }} {{ e.title }}</h3>
+        <p class="muted" style="margin:0">{{ e.summary }}</p>
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+          {% if e.level %}<span style="font-size:.8rem;padding:.2rem .5rem;border-radius:999px;border:1px solid #e5e7eb;background:#f8fafc">⭐ {{ e.level }}</span>{% endif %}
+          {% if e.duration %}<span style="font-size:.8rem;padding:.2rem .5rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff7ed">⏱️ {{ e.duration }} хв</span>{% endif %}
+          {% if e.age_range %}<span style="font-size:.8rem;padding:.2rem .5rem;border-radius:999px;border:1px solid #e5e7eb;background:#ecfeff">👧 {{ e.age_range }}</span>{% endif %}
+        </div>
+        <a class="btn" href="{% url 'experiments:experiments_detail_static' e.slug %}">Переглянути ➜</a>
+      </article>
+    {% empty %}
+      <article class="panel" style="padding:1rem">
+        <p class="muted" style="margin:0">Поки що немає експериментів — але скоро з’являться!</p>
+      </article>
+    {% endfor %}
+  </div>
+
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center">
+    <a class="app-btn" href="{% url 'experiments:experiments_random' %}">🎲 Випадковий експеримент</a>
+    <a class="app-btn" href="{% url 'experiments:experiments_manage' %}">🛠️ Адмінка</a>
+  </div>
+</section>
+{% endblock %}

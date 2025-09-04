@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Адмінка — Експерименти{% endblock %}
+
+{% block content %}
+<section class="panel" style="padding:1.25rem;display:grid;gap:1rem">
+  <header style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+    <h1 style="margin:0">🛠️ Менеджер експериментів</h1>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+      <a class="app-btn" href="{% url 'experiments:experiments_quick_add' %}">➕ Швидке додавання</a>
+      <a class="app-btn" href="/admin/" rel="noopener">⚙️ Django Admin</a>
+    </div>
+  </header>
+
+  <article class="panel" style="padding:1rem">
+    <p class="muted" style="margin:0">Зараз у списку приблизно <strong>{{ count }}</strong> експеримент(ів).</p>
+    <p style="margin:.5rem 0 0">Ця сторінка — тимчасова. Пізніше тут з’явиться таблиця з пошуком/фільтрами.</p>
+  </article>
+
+  <p><a class="app-btn" href="{% url 'experiments:experiments' %}">⬅️ Повернутися до списку</a></p>
+</section>
+{% endblock %}

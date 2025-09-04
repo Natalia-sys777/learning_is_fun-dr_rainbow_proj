@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Усі завдання — Dr Rainbow
+{% endblock %}
+
+{% block content %}
+<section class="panel" style="padding:1.25rem;display:grid;gap:1rem">
+  <header style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+    <div>
+      <h1 style="margin:0">📝 Завдання</h1>
+      <p class="muted" style="margin:.25rem 0 0">Оберіть завдання — і вперед до пригод!</p>
+    </div>
+    <div style="display:flex;gap:.5rem;align-items:center">
+      <img src="{% static 'images/assistant_girl.png' %}" alt="" style="height:56px;border-radius:12px;object-fit:cover">
+      <img src="{% static 'images/assistant_boy.png' %}" alt="" style="height:56px;border-radius:12px;object-fit:cover">
+    </div>
+  </header>
+
+  <div style="display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+    {% for task in tasks %}
+      <article class="panel" style="padding:1rem;display:grid;gap:.5rem">
+        <h3 style="margin:0">📌 {{ task.title }}</h3>
+        {% if task.lesson %}<span class="muted">До уроку: {{ task.lesson.title }}</span>{% endif %}
+
+        {% if task.level or task.duration %}
+          <div style="display:flex;gap:.35rem;flex-wrap:wrap">
+            {% if task.level %}
+              <span style="font-size:.8rem;padding:.2rem .5rem;border-radius:999px;border:1px solid #e5e7eb;background:#f0fdf4">⭐ {{ task.level }}</span>
+            {% endif %}
+            {% if task.duration %}
+              <span style="font-size:.8rem;padding:.2rem .5rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff7ed">⏱️ {{ task.duration }} хв</span>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if task.instructions %}
+          <p class="muted" style="margin:0">{{ task.instructions|truncatewords:20 }}</p>
+        {% endif %}
+
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.25rem">
+          <a class="btn" href="{% url 'task_detail' task.slug %}">Відкрити ➜</a>
+          {% if task.lesson %}<a class="app-btn" href="{% url 'lesson_detail' task.lesson.slug %}">📚 До уроку</a>{% endif %}
+        </div>
+      </article>
+    {% empty %}
+      <article class="panel" style="padding:1rem">
+        <p class="muted" style="margin:0">Поки що немає жодного завдання.</p>
+      </article>
+    {% endfor %}
+  </div>
+
+  {% if is_paginated %}
+  <nav class="panel" aria-label="Пагінація" style="padding:.75rem;display:flex;gap:.5rem;justify-content:center">
+    {% if page_obj.has_previous %}
+      <a class="app-btn" href="?page={{ page_obj.previous_page_number }}">⬅ Попередня</a>
+    {% endif %}
+    <span class="muted" style="display:grid;place-items:center">Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a class="app-btn" href="?page={{ page_obj.next_page_number }}">Наступна ➜</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+</section>
+{% endblock %}

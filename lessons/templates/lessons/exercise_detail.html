@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ exercise.title }} — Вправа{% endblock %}
+
+{% block content %}
+<section class="panel" style="padding:1.25rem;display:grid;gap:1rem">
+  <header style="display:grid;grid-template-columns:1fr 300px;gap:1rem;align-items:center">
+    <div>
+      <h1 style="margin:0">🎯 {{ exercise.title }}</h1>
+      {% if exercise.lesson %}
+        <p class="muted" style="margin:.3rem 0 0">До уроку: <a href="{% url 'lesson_detail' exercise.lesson.slug %}">{{ exercise.lesson.title }}</a></p>
+      {% endif %}
+      {% if exercise.difficulty or exercise.duration %}
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem">
+          {% if exercise.difficulty %}<span style="font-size:.85rem;padding:.25rem .6rem;border-radius:999px;border:1px solid #e5e7eb;background:#f8fafc">⭐ {{ exercise.difficulty }}</span>{% endif %}
+          {% if exercise.duration %}<span style="font-size:.85rem;padding:.25rem .6rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff7ed">⏱️ {{ exercise.duration }} хв</span>{% endif %}
+        </div>
+      {% endif %}
+    </div>
+    <aside class="panel" aria-hidden="true" style="padding:.75rem;display:grid;place-items:center">
+      <img src="{% static 'images/assistant_girl.png' %}" alt="" style="max-height:150px;object-fit:contain">
+    </aside>
+  </header>
+
+  {% if exercise.instructions %}
+  <section class="panel" style="padding:1rem;background:#eff6ff;border-color:#dbeafe">
+    <h3 style="margin-top:0">📋 Інструкції</h3>
+    <div style="line-height:1.65">{{ exercise.instructions|linebreaks }}</div>
+  </section>
+  {% endif %}
+
+  {% if exercise.hints %}
+  <section class="panel" style="padding:1rem;background:#f0fdf4;border-color:#dcfce7">
+    <h3 style="margin-top:0">💡 Підказки</h3>
+    <div style="line-height:1.65">{{ exercise.hints|linebreaks }}</div>
+  </section>
+  {% endif %}
+
+  <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+    <a class="app-btn" href="{% url 'exercise_list' %}">⬅ Усі вправи</a>
+    {% if exercise.lesson %}
+      <a class="app-btn" href="{% url 'lesson_exercise_list' exercise.lesson.slug %}">📚 Вправи цього уроку</a>
+      <a class="btn" href="{% url 'lesson_detail' exercise.lesson.slug %}">🔎 Переглянути урок</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

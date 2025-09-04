@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Наші веселі уроки — Dr Rainbow{% endblock %}
+
+{% block content %}
+<section class="panel" aria-label="Список уроків" style="padding:1.5rem">
+  <h2 style="margin-top:0">📚 Наші веселі уроки</h2>
+  <p class="muted">Оберіть тему — і гайда в пригоду з доктором Веселкою!</p>
+
+  <div style="
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  ">
+    {% for l in lessons %}
+      <article class="panel" style="
+        width: 100%;
+        padding: 1rem;
+        display: grid;
+        gap: 0.75rem;
+        transition: transform 0.2s ease;
+        cursor: pointer;
+      " onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <div style="flex-shrink: 0">
+            <img src="{% static l.assistant_image %}" alt="Помічник" style="height: 64px; border-radius: 12px">
+          </div>
+          <div>
+            <h3 style="margin: 0">{{ l.emoji }} {{ l.title }}</h3>
+            <p class="muted" style="margin: .25rem 0 0">{{ l.summary|truncatewords:16 }}</p>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: .5rem">
+          {% if l.level %}<span title="Складність" style="font-size:.8rem;padding:.2rem .5rem;border-radius:999px;border:1px solid var(--ring);background:#f8fafc">⭐ {{ l.level }}</span>{% endif %}
+          {% if l.duration %}<span title="Тривалість" style="font-size:.8rem;padding:.2rem .5rem;border-radius:999px;border:1px solid var(--ring);background:#fff7ed">⏱️ {{ l.duration }} хв</span>{% endif %}
+          {% if l.age_range %}<span title="Вік" style="font-size:.8rem;padding:.2rem .5rem;border-radius:999px;border:1px solid var(--ring);background:#ecfeff">👧 {{ l.age_range }}</span>{% endif %}
+        </div>
+
+        <div style="display: flex; gap: .5rem; flex-wrap: wrap">
+          {% if l.slug %}
+            <a class="btn" href="{% url 'lesson_detail' l.slug %}">Переглянути ➜</a>
+            <a class="app-btn" href="{% url 'lesson_exercise_list' l.slug %}">Експерименти</a>
+          {% else %}
+            <span class="muted" title="Урок без адреси">⛔ Без доступу</span>
+          {% endif %}
+        </div>
+      </article>
+    {% empty %}
+      <p class="muted">Поки що уроків немає 😢</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

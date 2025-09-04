@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ exp.title }} — Експеримент{% endblock %}
+
+{% block content %}
+<section class="panel" style="padding:1.25rem;display:grid;gap:1rem">
+  <header style="display:grid;grid-template-columns:1fr 320px;gap:1rem;align-items:center">
+    <div>
+      <h1 style="margin:0">{{ exp.emoji }} {{ exp.title }}</h1>
+      <p class="muted" style="margin:.25rem 0 0">{{ exp.summary }}</p>
+      <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem">
+        {% if exp.level %}<span style="font-size:.85rem;padding:.25rem .6rem;border-radius:999px;border:1px solid #e5e7eb;background:#f8fafc">⭐ {{ exp.level }}</span>{% endif %}
+        {% if exp.duration %}<span style="font-size:.85rem;padding:.25rem .6rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff7ed">⏱️ {{ exp.duration }} хв</span>{% endif %}
+        {% if exp.age_range %}<span style="font-size:.85rem;padding:.25rem .6rem;border-radius:999px;border:1px solid #e5e7eb;background:#ecfeff">👧 {{ exp.age_range }}</span>{% endif %}
+      </div>
+    </div>
+    <aside class="panel" style="padding:.75rem;display:grid;place-items:center">
+      <img src="{% static exp.image %}" alt="" style="max-height:180px;object-fit:contain">
+    </aside>
+  </header>
+
+  {% if exp.materials %}
+  <section class="panel" style="padding:1rem;background:#f0fdf4;border-color:#dcfce7">
+    <h3 style="margin-top:0">🧰 Матеріали</h3>
+    <ul style="margin:.5rem 0 0;padding-left:1.25rem">
+      {% for m in exp.materials %}<li>{{ m }}</li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if exp.steps %}
+  <section class="panel" style="padding:1rem;background:#eff6ff;border-color:#dbeafe">
+    <h3 style="margin-top:0">🪜 Кроки</h3>
+    <ol style="margin:.5rem 0 0;padding-left:1.25rem">
+      {% for s in exp.steps %}<li style="margin:.25rem 0">{{ s }}</li>{% endfor %}
+    </ol>
+  </section>
+  {% endif %}
+
+  {% if exp.safety_note %}
+  <section class="panel" style="padding:1rem;background:#fff7ed;border-color:#ffedd5">
+    <h3 style="margin-top:0">🫶 Безпека</h3>
+    <p style="margin:.5rem 0 0">{{ exp.safety_note }}</p>
+  </section>
+  {% endif %}
+
+  <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+    <a class="app-btn" href="{% url 'experiments:experiments' %}">⬅️ До списку</a>
+    <a class="app-btn" href="{% url 'experiments:experiments_random' %}">🎲 Ще один випадковий</a>
+  </div>
+</section>
+{% endblock %}

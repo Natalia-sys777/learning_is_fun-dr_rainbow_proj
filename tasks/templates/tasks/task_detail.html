@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Завдання: {{ task.title }} — Dr Rainbow
+{% endblock %}
+
+{% block content %}
+<section class="panel" style="padding:2rem;max-width:800px;margin:auto;display:grid;gap:1rem">
+  <h1 style="margin:0">📝 {{ task.title }}</h1>
+
+  {% if task.image %}
+    <img src="{{ task.image.url }}" alt="{{ task.title }}" style="width:100%;border-radius:12px;object-fit:cover">
+  {% endif %}
+
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+    {% if task.level %}
+      <span style="font-size:.8rem;padding:.2rem .75rem;border-radius:999px;background:#ecfccb;border:1px solid #d9f99d">
+        ⭐ Рівень: {{ task.level }}
+      </span>
+    {% endif %}
+    {% if task.duration %}
+      <span style="font-size:.8rem;padding:.2rem .75rem;border-radius:999px;background:#fef9c3;border:1px solid #facc15">
+        ⏱️ {{ task.duration }} хв
+      </span>
+    {% endif %}
+    <span class="muted" style="font-size:.85rem">Створено: {{ task.created_at|date:"d.m.Y H:i" }}</span>
+  </div>
+
+  <div>
+    <h3>🔍 Інструкція</h3>
+    <p>{{ task.instructions|linebreaks }}</p>
+  </div>
+
+  {% if task.lesson %}
+    <div>
+      <a class="app-btn" href="{% url 'lesson_detail' task.lesson.slug %}">📚 Перейти до уроку</a>
+    </div>
+  {% endif %}
+
+  <div>
+    <a class="btn" href="{% url 'tasks_list' %}">⬅ Назад до завдань</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ lesson.title }} — Урок{% endblock %}
+
+{% block content %}
+<section class="panel" aria-label="Деталі уроку" style="padding:1.5rem">
+
+  <!-- Вітальний блок з асистентом -->
+  <div style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap">
+    <div style="padding:.5rem;background:#fff;border-radius:20px;border:2px dashed #e5e7eb;box-shadow:0 8px 24px rgba(0,0,0,0.08)">
+      <img src="{% static lesson.assistant_image %}" alt="Асистент уроку" style="height:160px;border-radius:14px;">
+    </div>
+    <div>
+      <h1 style="margin:.2rem 0 0;font-size:1.8rem">{{ lesson.emoji|default:"📘" }} {{ lesson.title }}</h1>
+      <p class="muted" style="margin:.5rem 0 0;font-size:1.1rem">
+        Привіт! Давай дізнаємось щось новеньке разом із нашим помічником!
+      </p>
+    </div>
+  </div>
+
+  <!-- Про урок -->
+  {% if lesson.summary %}
+    <section class="panel" style="background:#fffbea;padding:1rem;border-radius:12px;margin-top:1.5rem">
+      <h2 style="margin-top:0">📝 Про урок</h2>
+      <p>{{ lesson.summary|linebreaks }}</p>
+    </section>
+  {% endif %}
+
+  <!-- Бейджі -->
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0">
+    {% if lesson.level %}
+      <span style="font-size:.9rem;padding:.3rem .7rem;border-radius:999px;border:1px solid #e5e7eb;background:#f8fafc">⭐ Складність: {{ lesson.level }}</span>
+    {% endif %}
+    {% if lesson.duration %}
+      <span style="font-size:.9rem;padding:.3rem .7rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff7ed">⏱️ {{ lesson.duration }} хв</span>
+    {% endif %}
+    {% if lesson.age_range %}
+      <span style="font-size:.9rem;padding:.3rem .7rem;border-radius:999px;border:1px solid #e5e7eb;background:#ecfeff">👧 Вік: {{ lesson.age_range }}</span>
+    {% endif %}
+  </div>
+
+  <!-- Теорія -->
+  {% if lesson.theory %}
+    <section class="panel" style="margin-top:1rem;padding:1rem;background:#eef2ff;border-color:#c7d2fe">
+      <h3 style="margin-top:0">📚 Теорія</h3>
+      <div style="margin-top:.5rem;line-height:1.65">
+        {{ lesson.theory|linebreaks }}
+      </div>
+    </section>
+  {% endif %}
+
+  <!-- Матеріали -->
+  {% if lesson.materials %}
+    <section class="panel" style="margin-top:1rem;padding:1rem;background:#f0fdf4;border-color:#dcfce7">
+      <h3 style="margin-top:0">🧰 Матеріали</h3>
+      <pre style="white-space:pre-wrap;margin:.5rem 0 0">{{ lesson.materials }}</pre>
+    </section>
+  {% endif %}
+
+  <!-- Кроки -->
+  {% if lesson.steps %}
+    <section class="panel" style="margin-top:1rem;padding:1rem;background:#eff6ff;border-color:#dbeafe">
+      <h3 style="margin-top:0">🪜 Кроки виконання</h3>
+      <div style="margin:.5rem 0 0;line-height:1.65">
+        {{ lesson.steps|linebreaks }}
+      </div>
+    </section>
+  {% endif %}
+
+  <!-- Вправи -->
+  {% if exercises %}
+    <section class="panel" style="margin-top:1rem;padding:1rem">
+      <h3 style="margin-top:0">⚗️ Вправи</h3>
+      <ol style="margin:.5rem 0 0;padding-left:1.25rem">
+        {% for ex in exercises %}
+          <li style="margin:.25rem 0">
+            <strong>{{ ex.title }}</strong>
+            {% if ex.instructions %}
+              <div class="muted" style="margin:.2rem 0 0">{{ ex.instructions|truncatewords:26 }}</div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    </section>
+  {% endif %}
+
+  <!-- Нотатка з безпеки -->
+  {% if lesson.safety_note %}
+    <section class="panel" style="margin-top:1rem;padding:1rem;background:#fff7ed;border-color:#ffedd5">
+      <h3 style="margin-top:0">🫶 Нотатка з безпеки</h3>
+      <p style="margin:.5rem 0 0">{{ lesson.safety_note|linebreaks }}</p>
+    </section>
+  {% endif %}
+
+  <!-- Навігація -->
+  <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem">
+    <a class="btn" href="{% url 'lessons' %}">⬅ Повернутись до уроків</a>
+    <a class="app-btn" href="{% url 'experiments:experiments' %}">🔬 До експериментів</a>
+
+    {% if lesson.slug %}
+      <a class="app-btn" href="{% url 'lesson_exercise_list' lesson.slug %}">🧩 Усі вправи</a>
+    {% else %}
+      <span class="muted" title="Урок без slug">⛔ Урок без доступу до вправ</span>
+    {% endif %}
+  </div>
+
+</section>
+{% endblock %}

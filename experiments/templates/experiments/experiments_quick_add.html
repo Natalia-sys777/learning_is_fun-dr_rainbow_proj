@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Швидке додавання — Експерименти{% endblock %}
+
+{% block content %}
+<section class="panel" style="padding:1.25rem;display:grid;gap:1rem">
+  <header style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+    <h1 style="margin:0">➕ Швидке додавання експерименту</h1>
+    <a class="app-btn" href="{% url 'experiments:experiments_manage' %}">🛠️ До менеджера</a>
+  </header>
+
+  <form method="post" class="panel" style="padding:1rem">
+    {% csrf_token %}
+    <div style="display:grid;gap:.6rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+      <label>Назва
+        <input class="input" name="title" placeholder="Домашня веселка" required />
+      </label>
+      <label>Слаг
+        <input class="input" name="slug" placeholder="home-rainbow" required />
+      </label>
+      <label>Емодзі
+        <input class="input" name="emoji" placeholder="🌈" maxlength="4" />
+      </label>
+      <label>Складність
+        <select class="input" name="level">
+          <option>дуже легко</option>
+          <option>легко</option>
+          <option>середньо</option>
+        </select>
+      </label>
+      <label>Тривалість (хв)
+        <input class="input" type="number" name="duration" min="1" placeholder="10" />
+      </label>
+      <label>Вік
+        <input class="input" name="age_range" placeholder="5+" />
+      </label>
+    </div>
+
+    <label style="margin-top:.6rem">Короткий опис
+      <textarea class="input" name="summary" rows="3" placeholder="Склянка води + світло = кольори!"></textarea>
+    </label>
+
+    <div style="display:grid;gap:.6rem;grid-template-columns:1fr 1fr;margin-top:.6rem">
+      <label>Матеріали (кожен з нового рядка)
+        <textarea class="input" name="materials" rows="3"></textarea>
+      </label>
+      <label>Кроки (кожен з нового рядка)
+        <textarea class="input" name="steps" rows="3"></textarea>
+      </label>
+    </div>
+
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem">
+      <button class="btn" type="submit">Зберегти</button>
+      <a class="app-btn" href="{% url 'experiments:experiments' %}">Відмінити</a>
+    </div>
+
+    <p class="muted" style="margin-top:.5rem">Зараз форма робить редірект без збереження. Пізніше підключимо модель.</p>
+  </form>
+</section>
+{% endblock %}

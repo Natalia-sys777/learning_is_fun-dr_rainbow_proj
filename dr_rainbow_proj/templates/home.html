@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Головна — Dr Rainbow{% endblock %}
+
+{% block content %}
+<section class="panel" style="padding:1.5rem;display:grid;gap:1rem;align-items:center;text-align:center">
+
+  <h1 style="font-size:2rem;margin:0">🎓 Вчитися - це весело!</h1>
+  <p class="muted" style="font-size:1.1rem">Вітаємо у фізичній лабораторії! Знайомтеся - це помічники доктора Веселки. Вони вам будуть допомагати. Оберіть розділ та вирушайте в подорож знань.</p>
+
+  <!-- Ілюстрації помічників -->
+  <div style="display:flex;gap:1.5rem;justify-content:center;margin:1rem 0">
+    <img src="{% static 'images/assistant_girl.png' %}" alt="Помічниця доктора Веселки" style="height:120px;border-radius:14px;object-fit:cover;box-shadow:0 4px 10px rgba(0,0,0,0.15)">
+    <img src="{% static 'images/assistant_boy.png' %}" alt="Помічник доктора Веселки" style="height:120px;border-radius:14px;object-fit:cover;box-shadow:0 4px 10px rgba(0,0,0,0.15)">
+  </div>
+
+  <!-- Кнопки переходів -->
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+    <a class="nav-btn" href="{% url 'lessons' %}">📚 Уроки</a>
+    <a class="nav-btn" href="{% url 'experiments:experiments' %}">🔬 Експерименти</a>
+    <button id="surpriseBtn" class="nav-btn" style="cursor:pointer">🎲 Сюрприз</button>
+  </div>
+
+</section>
+
+<script>
+  (function(){
+    const btn = document.getElementById('surpriseBtn');
+    if(!btn) return;
+    const routes = [
+      "{% url 'experiments:experiments_detail_static' 'home-rainbow' %}",
+      "{% url 'experiments:experiments_detail_static' 'magnet-fish' %}",
+      "{% url 'experiments:experiments_detail_static' 'balloon-rocket' %}"
+    ];
+    btn.addEventListener('click', () => {
+      const rand = Math.floor(Math.random() * routes.length);
+      location.href = routes[rand];
+    });
+  })();
+</script>
+{% endblock %}
