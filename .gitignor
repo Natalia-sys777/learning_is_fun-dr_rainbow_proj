@@ -1,9 +1,11 @@
 # Python
 __pycache__/
-*.py[cod]
-*.egg
-*.egg-info/
+*.pyc
 *.pyo
+*.pyd
+*.db
+*.sqlite3
+.env
 
 # Virtual environment
 venv/
