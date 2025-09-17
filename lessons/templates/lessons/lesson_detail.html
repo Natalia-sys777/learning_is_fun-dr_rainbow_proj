@@ -6,6 +6,13 @@
 {% block content %}
 <section class="panel" aria-label="Деталі уроку" style="padding:1.5rem">
 
+{% if lesson.parent_notes %}
+  <section class="panel" style="background:#fef6fb;padding:1rem;margin-top:1rem">
+    <h3>👨‍👩‍👧 Для батьків і педагогів</h3>
+    <p>{{ lesson.parent_notes|linebreaks }}</p>
+  </section>
+{% endif %}
+
   <!-- Вітальний блок з асистентом -->
   <div style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap">
     <div style="padding:.5rem;background:#fff;border-radius:20px;border:2px dashed #e5e7eb;box-shadow:0 8px 24px rgba(0,0,0,0.08)">

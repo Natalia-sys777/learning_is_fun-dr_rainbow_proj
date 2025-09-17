@@ -1,0 +1,28 @@
+{% if parent_notes_intro or parent_notes_tips or parent_notes_questions %}
+<section class="panel" style="background:#fef6fb;padding:1rem;margin-top:1.5rem">
+  <h3 style="margin-top:0">👨‍👩‍👧 Для батьків і педагогів</h3>
+
+  {% if parent_notes_intro %}
+    <p>{{ parent_notes_intro|linebreaks }}</p>
+  {% endif %}
+
+  {% if parent_notes_tips %}
+    <h4>🧠 Поради</h4>
+    <ul>
+      {% for tip in parent_notes_tips %}
+        <li>{{ tip }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if parent_notes_questions %}
+    <h4>🗣️ Питання для обговорення</h4>
+    <ul>
+      {% for question in parent_notes_questions %}
+        <li>{{ question }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>
+{% endif %}
+

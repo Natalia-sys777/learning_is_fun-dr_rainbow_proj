@@ -14,6 +14,7 @@ class Lesson(models.Model):
     assistant_image = models.CharField("Зображення асистента", max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     theory = models.TextField(blank=True, help_text="Текстовий опис для пояснення теорії")
+    parent_notes = models.JSONField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Урок"
