@@ -55,10 +55,6 @@ class LessonDetailView(DetailView):
     template_name = 'lessons/lesson_detail.html'
     context_object_name = 'lesson'
     slug_url_kwarg = 'lesson_slug'
-    parent_notes = getattr(lesson, 'parent_notes', {}) or {}
-    context['parent_notes_intro'] = parent_notes.get('intro')
-    context['parent_notes_tips'] = parent_notes.get('tips', [])
-    context['parent_notes_questions'] = parent_notes.get('questions', [])
 
     def get_queryset(self):
         return Lesson.objects.prefetch_related('exercises')
@@ -73,6 +69,10 @@ class LessonDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         lesson = context['lesson']
+        parent_notes = getattr(lesson, 'parent_notes', {}) or {}
+        context['parent_notes_intro'] = parent_notes.get('intro')
+        context['parent_notes_tips'] = parent_notes.get('tips', [])
+        context['parent_notes_questions'] = parent_notes.get('questions', [])
 
         # Вправи
         exercises_qs = lesson.exercises.all()
