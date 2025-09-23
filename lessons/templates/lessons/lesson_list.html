@@ -40,11 +40,11 @@
         </div>
 
         <div style="display: flex; gap: .5rem; flex-wrap: wrap">
-          {% if l.slug %}
+          {% if l.slug and l.is_public %}
             <a class="btn" href="{% url 'lesson_detail' l.slug %}">Переглянути ➜</a>
             <a class="app-btn" href="{% url 'lesson_exercise_list' l.slug %}">Експерименти</a>
           {% else %}
-            <span class="muted" title="Урок без адреси">⛔ Без доступу</span>
+            <span class="muted" title="Урок без доступу">⛔ Без доступу</span>
           {% endif %}
         </div>
       </article>

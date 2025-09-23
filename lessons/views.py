@@ -1,7 +1,6 @@
 from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, Count
-from django.urls import reverse
 from .models import Lesson, Exercise
 import random
 
@@ -19,7 +18,7 @@ class LessonListView(ListView):
     def get_queryset(self):
         qs = (
             Lesson.objects
-            .all()
+            .filter(is_public=True)  # ✅ показуємо тільки доступні уроки
             .annotate(exercises_count=Count('exercises', distinct=True))
         )
 
@@ -44,7 +43,6 @@ class LessonListView(ListView):
         ctx['q'] = self.request.GET.get('q', '')
         ctx['level'] = self.request.GET.get('level', '')
         return ctx
-
 
 
 class LessonDetailView(DetailView):
@@ -87,10 +85,10 @@ class LessonDetailView(DetailView):
         context['steps_list'] = self._split_field(lesson.steps, ';')
 
         # Схожі уроки
-        context['related_lessons'] = Lesson.objects.exclude(pk=lesson.pk).filter(level=lesson.level)[:6]
+        context['related_lessons'] = Lesson.objects.exclude(pk=lesson.pk).filter(level=lesson.level, is_public=True)[:6]
 
         # Випадкові (сюрприз)
-        context['random_lessons'] = Lesson.objects.exclude(pk=lesson.pk).order_by('?')[:5]
+        context['random_lessons'] = Lesson.objects.exclude(pk=lesson.pk).filter(is_public=True).order_by('?')[:5]
 
         # Асистент (автоматично, якщо не задано)
         if not lesson.assistant_image:
@@ -99,8 +97,8 @@ class LessonDetailView(DetailView):
                 context['assistant_image'] = 'images/assistant_boy.png'
             elif 'світло' in title or 'тін' in title:
                 context['assistant_image'] = 'images/assistant_girl.png'
-            elif 'швидкість' in title or 'тін' in title:
-                context['assistant_image'] = 'images/assistant_rainbow .png'
+            elif 'швидкість' in title or 'рух' in title:
+                context['assistant_image'] = 'images/assistant_rainbow.png'
             else:
                 context['assistant_image'] = random.choice([
                     'images/assistant_boy.png',
