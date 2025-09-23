@@ -116,6 +116,7 @@ class Command(BaseCommand):
                     "assistant_image": data["assistant_image"],
                     "theory": data["theory"],
                     "safety_note": data["safety_note"],
+                    "is_public": True,
                 }
             )
 

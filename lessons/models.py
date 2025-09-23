@@ -16,6 +16,7 @@ class Lesson(models.Model):
     theory = models.TextField(blank=True, help_text="Текстовий опис для пояснення теорії")
     parent_notes = models.JSONField(null=True, blank=True)
     safety_note = models.TextField("Примітка з безпеки", blank=True, null=True)
+    is_public = models.BooleanField("Опубліковано", default=False)
 
     class Meta:
         verbose_name = "Урок"
