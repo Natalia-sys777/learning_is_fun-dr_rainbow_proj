@@ -110,8 +110,10 @@ class Command(BaseCommand):
             )
 
             for i, ex_data in enumerate(data["exercises"]):
+                ex_slug = slugify(ex_data["title"], allow_unicode=True) or f"exercise-{i}-{clean_slug}"
+
                 Exercise.objects.get_or_create(
-                    slug=slugify(ex_data["title"], allow_unicode=False),
+                    slug=ex_slug,
                     lesson=lesson,
                     defaults={
                         "title": ex_data["title"],
