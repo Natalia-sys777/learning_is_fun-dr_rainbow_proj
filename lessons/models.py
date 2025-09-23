@@ -15,6 +15,7 @@ class Lesson(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     theory = models.TextField(blank=True, help_text="Текстовий опис для пояснення теорії")
     parent_notes = models.JSONField(null=True, blank=True)
+    safety_note = models.TextField("Примітка з безпеки", blank=True, null=True)
 
     class Meta:
         verbose_name = "Урок"
