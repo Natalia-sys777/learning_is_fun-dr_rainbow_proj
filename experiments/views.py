@@ -182,8 +182,9 @@ EXPERIMENTS = {
         "image": "images/phone.png",
         "duration": 10,
         "age_range": "5+",
-        "level": "дуже легко",
-    }
+        "level": "дуже легко"
+    },
+}
 
 
 
