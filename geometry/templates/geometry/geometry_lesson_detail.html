@@ -21,9 +21,9 @@
   <section style="margin-top: 1rem;">
     <h3>🧰 Матеріали</h3>
     <ul>
-      {% for item in lesson.materials|linebreaksbr|striptags|split:"," %}
-        <li>{{ item }}</li>
-      {% endfor %}
+  {% for step in steps_list %}
+    <li>{{ step }}</li>
+  {% endfor %}
     </ul>
   </section>
   {% endif %}
@@ -32,9 +32,9 @@
   <section style="margin-top: 1rem;">
     <h3>🧪 Кроки</h3>
     <ol>
-      {% for step in lesson.steps|linebreaksbr|striptags|split:";" %}
-        <li>{{ step }}</li>
-      {% endfor %}
+  {% for step in steps_list %}
+    <li>{{ step }}</li>
+  {% endfor %}
     </ol>
   </section>
   {% endif %}
