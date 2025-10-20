@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'experiments',
     'lessons',
     'tasks',
+    'geometry',
 ]
 
 MIDDLEWARE = [

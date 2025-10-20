@@ -308,6 +308,7 @@
 </head>
 <body>
 <a href="#main" class="skip">Перейти до основного контенту</a>
+
 <div class="wrap">
 
   <!-- ===== HEADER ===== -->
@@ -327,6 +328,7 @@
         <nav class="main" aria-label="Основна навігація">
           <a class="nav-btn" href="{% url 'home' %}">🏠 Головна</a>
           <a class="nav-btn" href="{% url 'lessons' %}">📚 Уроки</a>
+          <a class="nav-btn" href="{% url 'geometry:lesson_list' %}">📐 Геометрія</a>
           <a class="nav-btn" href="{% url 'experiments:experiments' %}">🔬 Експерименти</a>
           <a class="nav-btn nav-btn--ghost" href="/tasks/">🧩 Завдання</a>
           <a class="nav-btn nav-btn--ghost" href="/admin/">🛠️ Адмінка</a>

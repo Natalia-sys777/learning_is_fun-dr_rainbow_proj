@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Геометрія — Уроки | Dr Rainbow{% endblock %}
+
+{% block content %}
+<section class="panel">
+  <h2>📐 Геометрія для початківців</h2>
+  <p class="muted">Досліджуємо фігури, форми та простір у веселий спосіб!</p>
+</section>
+
+<form method="get" class="panel" style="display: flex; flex-wrap: wrap; gap: 1rem;">
+  <input type="text" name="q" value="{{ q }}" placeholder="🔍 Пошук..." class="app-btn" style="flex: 1;">
+  <select name="level" class="app-btn">
+    <option value="">🔢 Всі рівні</option>
+    <option value="дуже легко" {% if level == "дуже легко" %}selected{% endif %}>🥉 Дуже легко</option>
+    <option value="легко" {% if level == "легко" %}selected{% endif %}>🥈 Легко</option>
+    <option value="середньо" {% if level == "середньо" %}selected{% endif %}>🥇 Середньо</option>
+  </select>
+  <button type="submit" class="btn">Застосувати</button>
+</form>
+
+<section class="grid" style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+  {% for lesson in lessons %}
+    <a href="{% url 'geometry:lesson_detail' lesson.slug %}" class="panel" style="text-align: center;">
+      {% if lesson.image %}
+        <img src="{{ lesson.image.url }}" alt="Зображення уроку {{ lesson.title }}" style="width: 100%; border-radius: 12px; object-fit: cover; max-height: 160px;">
+      {% endif %}
+      <h3 style="margin-top: 0.5rem;">{{ lesson.title }}</h3>
+      <p class="muted">{{ lesson.summary|truncatechars:80 }}</p>
+      <p class="tiny">📏 Рівень: {{ lesson.level }}</p>
+    </a>
+  {% empty %}
+    <p class="muted">Наразі немає доступних уроків.</p>
+  {% endfor %}
+</section>
+
+{% if is_paginated %}
+  <div class="panel" style="text-align: center;">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}&q={{ q }}&level={{ level }}" class="app-btn">← Назад</a>
+    {% endif %}
+    <span class="muted">Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}&q={{ q }}&level={{ level }}" class="app-btn">Вперед →</a>
+    {% endif %}
+  </div>
+{% endif %}
+{% endblock %}

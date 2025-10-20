@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}{{ lesson.title }} | Геометрія | Dr Rainbow{% endblock %}
+
+{% block content %}
+<article class="panel">
+  <h2>{{ lesson.emoji }} {{ lesson.title }}</h2>
+  <p class="muted">{{ lesson.summary }}</p>
+
+  {% if lesson.image %}
+    <div style="text-align: center; margin: 1rem 0;">
+      <img src="{{ lesson.image.url }}" alt="Ілюстрація до {{ lesson.title }}" style="max-width: 100%; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    </div>
+  {% endif %}
+
+  <section>
+    <h3>📘 Теорія</h3>
+    <div style="white-space: pre-line;">{{ lesson.theory }}</div>
+  </section>
+
+  {% if lesson.materials %}
+  <section style="margin-top: 1rem;">
+    <h3>🧰 Матеріали</h3>
+    <ul>
+      {% for item in lesson.materials|linebreaksbr|striptags|split:"," %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if lesson.steps %}
+  <section style="margin-top: 1rem;">
+    <h3>🧪 Кроки</h3>
+    <ol>
+      {% for step in lesson.steps|linebreaksbr|striptags|split:";" %}
+        <li>{{ step }}</li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endif %}
+
+  {% if lesson.safety_note %}
+  <section style="margin-top: 1rem;">
+    <h3>⚠️ Зауваження</h3>
+    <p class="muted">{{ lesson.safety_note }}</p>
+  </section>
+  {% endif %}
+
+  {% if exercises %}
+  <section style="margin-top: 2rem;">
+    <h3>🧩 Вправи</h3>
+    <div class="grid" style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+      {% for exercise in exercises %}
+        <div class="panel">
+          <h4>{{ exercise.title }}</h4>
+          <p>{{ exercise.instructions }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+</article>
+
+<section class="panel" style="margin-top: 2rem;">
+  <h3>🎁 Інші уроки</h3>
+  <div class="grid" style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+    {% for related in related_lessons %}
+      <a href="{% url 'geometry:lesson_detail' related.slug %}" class="panel" style="text-align: center;">
+        {% if related.image %}
+          <img src="{{ related.image.url }}" alt="Зображення {{ related.title }}" style="width: 100%; border-radius: 12px; max-height: 120px; object-fit: cover;">
+        {% endif %}
+        <h4>{{ related.title }}</h4>
+        <p class="tiny muted">{{ related.summary|truncatechars:70 }}</p>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

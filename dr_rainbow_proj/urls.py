@@ -10,5 +10,7 @@ urlpatterns = [
         "experiments/",
         include(("experiments.urls", "experiments"), namespace="experiments")),
     path("tasks/", include("tasks.urls")),
+    path('geometry/', include('geometry.urls')),
+
 ]
 
