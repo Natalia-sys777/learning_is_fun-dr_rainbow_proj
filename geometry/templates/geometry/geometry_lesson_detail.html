@@ -12,10 +12,13 @@
     </div>
   {% endif %}
 
-  <section>
-    <h3>📘 Теорія</h3>
-    <div style="white-space: pre-line;">{{ lesson.theory }}</div>
+  {% if lesson.theory %}
+  <section class="panel" aria-label="Теорія">
+    <h3>📚 Теорія</h3>
+    <p>{{ lesson.theory|linebreaks }}</p>
   </section>
+  {% endif %}
+
 
   {% if lesson.materials %}
   <section style="margin-top: 1rem;">
