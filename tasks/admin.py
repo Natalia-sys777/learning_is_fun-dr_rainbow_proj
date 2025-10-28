@@ -3,9 +3,9 @@ from .models import Task
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ("title", "lesson", "level", "duration", "created_at", "preview_image")
+    list_display = ("title", "level", "duration", "created_at", "preview_image")
     search_fields = ("title", "instructions")
-    list_filter = ("lesson", "level", "created_at")
+    list_filter = ("level", "created_at")
     prepopulated_fields = {"slug": ("title",)}
 
     def preview_image(self, obj):

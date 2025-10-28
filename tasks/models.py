@@ -1,11 +1,9 @@
 from django.db import models
 from django.urls import reverse
-from lessons.models import Lesson
 
 class Task(models.Model):
     title = models.CharField(max_length=200, verbose_name="Назва завдання")
     slug = models.SlugField(unique=True, verbose_name="URL-псевдонім")
-    lesson = models.ForeignKey(Lesson, related_name="tasks", on_delete=models.CASCADE, verbose_name="Урок")
     instructions = models.TextField(verbose_name="Інструкція")
     level = models.CharField(max_length=50, blank=True, verbose_name="Рівень")
     duration = models.PositiveIntegerField(null=True, blank=True, verbose_name="Тривалість (хв)")
