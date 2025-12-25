@@ -59,17 +59,16 @@
   {% endif %}
 
   <!-- Матеріали -->
-{% if lesson.materials %}
-  <section class="panel" style="margin-top:1rem;padding:1rem;background:#f0fdf4;border-color:#dcfce7">
+ {% if materials_list %}
+   <section class="panel" style="margin-top:1rem;padding:1rem;background:#f0fdf4;border-color:#dcfce7">
     <h3 style="margin-top:0">🧰 Матеріали</h3>
     <ul style="margin:.5rem 0 0; padding-left: 1.2rem; line-height: 1.6">
-      {% for item in lesson.materials|linebreaksbr|striptags|safe|cut:" "|split:", " %}
+      {% for item in materials_list %}
         <li>{{ item }}</li>
       {% endfor %}
     </ul>
   </section>
 {% endif %}
-
 <!-- Кроки -->
 {% if lesson.steps %}
   <section class="panel" style="margin-top:1rem;padding:1rem;background:#eff6ff;border-color:#dbeafe">

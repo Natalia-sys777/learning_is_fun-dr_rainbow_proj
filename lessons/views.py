@@ -83,6 +83,7 @@ class LessonDetailView(DetailView):
         # Матеріали та кроки
         context['materials_list'] = self._split_field(lesson.materials, ',')
         context['steps_list'] = self._split_field(lesson.steps, ';')
+        ctx['materials_list'] = [s.strip() for s in lesson.materials.split(',') if s.strip()]
 
         # Схожі уроки
         context['related_lessons'] = Lesson.objects.exclude(pk=lesson.pk).filter(level=lesson.level, is_public=True)[:6]
