@@ -70,14 +70,14 @@
   </section>
 {% endif %}
 <!-- Кроки -->
-{% if lesson.steps %}
+{% if steps_list %}
   <section class="panel" style="margin-top:1rem;padding:1rem;background:#eff6ff;border-color:#dbeafe">
     <h3 style="margin-top:0">🪜 Кроки виконання</h3>
-    <ol style="margin:.5rem 0 0; padding-left: 1.2rem; line-height: 1.65">
-      {% for step in lesson.steps|linebreaksbr|striptags|safe|cut:" "|split:";" %}
+    <ul style="margin:.5rem 0 0; padding-left: 1.2rem; line-height: 1.6">
+      {% for step in steps_list %}
         <li>{{ step }}</li>
       {% endfor %}
-    </ol>
+    </ul>
   </section>
 {% endif %}
 

@@ -85,6 +85,7 @@ class LessonDetailView(DetailView):
         context['steps_list'] = self._split_field(lesson.steps, ';')
         context['materials_list'] = [s.strip() for s in lesson.materials.split(',') if s.strip()]
 
+
         # Схожі уроки
         context['related_lessons'] = Lesson.objects.exclude(pk=lesson.pk).filter(level=lesson.level, is_public=True)[:6]
 
